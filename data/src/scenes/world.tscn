@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c68il1yq756c"]
+
+[sub_resource type="Environment" id="Environment_gd171"]
+
+[node name="World" type="Node3D"]
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = SubResource("Environment_gd171")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
