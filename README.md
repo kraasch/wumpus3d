@@ -14,5 +14,6 @@
 
 ## sources
 
-https://www.youtube.com/watch?v=JxbnStn-BIY
-https://github.com/godotengine/godot/issues/74111
+ - https://www.youtube.com/watch?v=JxbnStn-BIY
+ - https://github.com/godotengine/godot/issues/74111
+ - https://kenney.nl/assets/platformer-kit
