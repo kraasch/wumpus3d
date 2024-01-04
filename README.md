@@ -3,9 +3,12 @@
 
 ## to-do
 
- - randomly place: player, bat, hole, wumpus, weapon.
- - implement indicators for proximity warnings (ie bat flaps, hole has draft, wumpus smells like wumpus).
- - implement game rules.
+ - [ ] randomly place: player, bat, hole, wumpus, weapon.
+ - [ ] implement indicators for proximity warnings
+   - bat flaps
+   - hole has draft
+   - wumpus smells like wumpus
+ - [ ] implement game rules.
 
 
 
