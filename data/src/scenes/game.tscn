@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy8thy6q3xt6x"]
+
+[ext_resource type="PackedScene" uid="uid://d2jlubt1cp068" path="res://data/src/scenes/field.tscn" id="1_m8aeq"]
+[ext_resource type="Script" path="res://data/src/scenes/game.gd" id="1_ygobs"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_ygobs")
+
+[node name="Objs" type="Node3D" parent="."]
+
+[node name="Fields" type="Node3D" parent="Objs"]
+
+[node name="Field" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
+
+[node name="Field2" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+
+[node name="Field3" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="Field5" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="Field6" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
+[node name="Field4" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
+
+[node name="Field7" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+
+[node name="Field8" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="Field9" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
+
+[node name="Field10" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+
+[node name="Field11" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
+
+[node name="Field12" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -3)
+
+[node name="Field13" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
+
+[node name="Field14" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+
+[node name="Field15" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -4)
+
+[node name="Field16" parent="Objs/Fields" instance=ExtResource("1_m8aeq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)

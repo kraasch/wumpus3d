@@ -1,87 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://c68il1yq756c"]
+[gd_scene load_steps=5 format=3 uid="uid://c68il1yq756c"]
 
-[ext_resource type="PackedScene" uid="uid://d2jlubt1cp068" path="res://data/src/scenes/field.tscn" id="1_ib3bl"]
-[ext_resource type="PackedScene" uid="uid://rxlf6ypgybsh" path="res://data/src/scenes/bomb.tscn" id="2_dfyak"]
-[ext_resource type="PackedScene" uid="uid://bxpa66uejtyvw" path="res://data/src/scenes/hole.tscn" id="3_rtyvk"]
-[ext_resource type="PackedScene" uid="uid://c6e83flrrxcgy" path="res://data/src/scenes/wumpus.tscn" id="4_mbc3x"]
-[ext_resource type="PackedScene" uid="uid://cvogppr3f8q7s" path="res://data/src/scenes/bat.tscn" id="5_xk00w"]
+[ext_resource type="PackedScene" uid="uid://cy8thy6q3xt6x" path="res://data/src/scenes/game.tscn" id="1_hsb8l"]
+[ext_resource type="Script" path="res://data/src/scenes/world.gd" id="1_i3fff"]
 [ext_resource type="PackedScene" uid="uid://cfea548qo6k0g" path="res://data/src/scenes/hud.tscn" id="6_or7j7"]
 
 [sub_resource type="Environment" id="Environment_gd171"]
 
 [node name="World" type="Node3D"]
-
-[node name="Env" type="Node3D" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
-environment = SubResource("Environment_gd171")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
-transform = Transform3D(0.958263, -0.132012, -0.253583, 0.281642, 0.283617, 0.916646, -0.0490882, -0.949808, 0.308959, -4.19049, 8.70036, 4.26595)
-
-[node name="Objs" type="Node3D" parent="."]
-
-[node name="Fields" type="Node3D" parent="Objs"]
-
-[node name="Field" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
-
-[node name="Field2" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
-
-[node name="Field3" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
-
-[node name="Field5" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
-
-[node name="Field6" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
-
-[node name="Field4" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
-
-[node name="Field7" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
-
-[node name="Field8" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
-
-[node name="Field9" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
-
-[node name="Field10" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
-
-[node name="Field11" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
-
-[node name="Field12" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -3)
-
-[node name="Field13" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
-
-[node name="Field14" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
-
-[node name="Field15" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -4)
-
-[node name="Field16" parent="Objs/Fields" instance=ExtResource("1_ib3bl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
-
-[node name="Bomb" parent="Objs" instance=ExtResource("2_dfyak")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.25, -3)
-
-[node name="Hole" parent="Objs" instance=ExtResource("3_rtyvk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.25, -3)
-
-[node name="Wumpus" parent="Objs" instance=ExtResource("4_mbc3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.25, -2)
-
-[node name="Bat" parent="Objs" instance=ExtResource("5_xk00w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.25, -1)
+visible = false
+script = ExtResource("1_i3fff")
 
 [node name="Misc" type="Node3D" parent="."]
 
@@ -95,3 +22,15 @@ anchor_right = 0.877
 anchor_bottom = 0.683
 offset_right = 141.696
 offset_bottom = 205.416
+
+[node name="Objs" type="Node3D" parent="."]
+
+[node name="Game" parent="Objs" instance=ExtResource("1_hsb8l")]
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = SubResource("Environment_gd171")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env"]
+transform = Transform3D(0.958263, -0.132012, -0.253583, 0.281642, 0.283617, 0.916646, -0.0490882, -0.949808, 0.308959, -4.19049, 8.70036, 4.26595)
