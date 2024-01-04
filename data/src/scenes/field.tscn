@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2jlubt1cp068"]
+
+[ext_resource type="PackedScene" uid="uid://cnfldnyuppi64" path="res://data/assets/kenney_dae/blockMoving.dae" id="1_5cehl"]
+
+[node name="Field" type="Node3D"]
+
+[node name="blockMoving" parent="." instance=ExtResource("1_5cehl")]

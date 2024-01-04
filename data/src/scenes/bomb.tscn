@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://rxlf6ypgybsh"]
+
+[ext_resource type="PackedScene" uid="uid://bk0rmmdix12y8" path="res://data/assets/kenney_dae/bomb.dae" id="1_d3u01"]
+
+[node name="Bomb" type="Node3D"]
+
+[node name="bomb" parent="." instance=ExtResource("1_d3u01")]
