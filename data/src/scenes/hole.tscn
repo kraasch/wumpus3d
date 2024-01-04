@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxpa66uejtyvw"]
+
+[ext_resource type="PackedScene" uid="uid://cn6fx70wmct8u" path="res://data/assets/kenney_dae/spikes.dae" id="1_qjfp7"]
+
+[node name="Hole" type="Node3D"]
+
+[node name="spikes" parent="." instance=ExtResource("1_qjfp7")]

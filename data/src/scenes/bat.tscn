@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvogppr3f8q7s"]
+
+[ext_resource type="PackedScene" uid="uid://500r48524u5j" path="res://data/assets/kenney_dae/mushrooms.dae" id="1_fiabm"]
+
+[node name="Bat" type="Node3D"]
+
+[node name="mushrooms" parent="." instance=ExtResource("1_fiabm")]
