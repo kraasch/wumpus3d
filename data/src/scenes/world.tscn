@@ -86,7 +86,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.25, -1)
 [node name="Misc" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Misc"]
-transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -2, 9, 2)
+transform = Transform3D(0.707107, 0.579228, -0.40558, 0, 0.573577, 0.819152, 0.707107, -0.579228, 0.40558, -2, 9, 2)
+fov = 43.5
 
 [node name="Hud" parent="Misc" instance=ExtResource("6_or7j7")]
 anchors_preset = -1
