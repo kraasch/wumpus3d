@@ -68,8 +68,20 @@ func _input(event):
 	if event.is_action_pressed("ui_down"):
 		set_mark(0, 1)
 	if event.is_action_pressed("ui_accept"):
-		pass
+		move_player()
+
+func move_player():
+	player.position.x = mark.position.x
+	player.position.z = mark.position.z
 
 func set_mark(x, y):
-	mark.position.x = player.position.x + x
-	mark.position.z = player.position.z + y
+	const MIN = 1
+	const MAX = 4
+	var temp_x = player.position.x + x
+	var temp_y = player.position.z + y
+	temp_x = max(MIN, temp_x)
+	temp_x = min(MAX, temp_x)
+	temp_y = max(-MAX, temp_y)
+	temp_y = min(-MIN, temp_y)
+	mark.position.x = temp_x
+	mark.position.z = temp_y
