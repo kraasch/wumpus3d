@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://1s6xn6mkd410"]
+
+[ext_resource type="PackedScene" uid="uid://22fnskh427at" path="res://data/assets/graveyard_glb/grave-border.glb" id="1_okwmx"]
+
+[node name="Marker" type="Node3D"]
+
+[node name="grave-border" parent="." instance=ExtResource("1_okwmx")]
