@@ -8,7 +8,6 @@
 volumetric_fog_enabled = true
 
 [node name="World" type="Node3D"]
-visible = false
 script = ExtResource("1_i3fff")
 
 [node name="Misc" type="Node3D" parent="."]
