@@ -29,7 +29,7 @@ func show_game():
 	for obj in grid:
 		var x : int = int(i / N)
 		var y : int = int(i % N)
-		if view[i] or true:
+		if view[i]:
 			if obj != null:
 				place_object(obj, x + 1, y + 1)
 		else:
