@@ -3,12 +3,23 @@
 
 ## to-do
 
+main:
+
+ - [ ] replace all textures with shaders.
+ - [ ] only use web-compatible shaders.
+
+other:
+
+ - [ ] implement game rules.
  - [ ] randomly place: player, bat, hole, wumpus, weapon.
  - [ ] implement indicators for proximity warnings
    - bat flaps
    - hole has draft
    - wumpus smells like wumpus
- - [ ] implement game rules.
+
+extra:
+
+ - [ ] upload project to itch.io.
 
 ## sources
 
