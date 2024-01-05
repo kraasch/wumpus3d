@@ -8,52 +8,54 @@ const res_play = preload("res://data/src/scenes/player.tscn")
 const res_fog  = preload("res://data/src/scenes/fog.tscn")
 const res_mark = preload("res://data/src/scenes/marker.tscn")
 
-var grid = []
-var view = []
-var mark = res_mark.instantiate()
+var mark   = res_mark.instantiate()
+var player = res_play.instantiate()
+var wump   = res_wump.instantiate()
+var bat    = res_bat.instantiate()
+var hole   = res_hole.instantiate()
+var bomb   = res_bomb.instantiate()
 
-func place_object(resource, x, y, z : float = 0.25):
-	var offset : bool = true
-	var obj = resource.instantiate()
-	self.get_node('Objs').add_child(obj)
-	if offset:
-		obj.position.y = z
-	obj.position.z = -y
-	obj.position.x = x
+var grid = []
+var game_objects = []
 
 func _ready():
-	self.get_node('Objs').add_child(mark)
-	mark.visible = false
-	mark.position.y = 0.25
+	game_objects.append(mark)
+	game_objects.append(player)
+	game_objects.append(wump)
+	game_objects.append(bat)
+	game_objects.append(hole)
+	game_objects.append(bomb)
+	for obj in game_objects:
+		self.get_node('Objs').add_child(obj)
+		obj.visible = true
+		obj.position.y = 0.25
 	new_game()
-	show_game()
+	init_obj(mark, 5, 5)
+	init_game()
 
-func show_game():
+func init_game():
 	const N = 4
 	var i = 0
 	for obj in grid:
 		@warning_ignore("integer_division")
 		var x : int = int(i / N)
 		var y : int = int(i % N)
-		if view[i]:
-			if obj != null:
-				place_object(obj, x + 1, y + 1)
-		else:
-			place_object(res_fog, x + 1, y + 1)
+		init_obj(obj, x, y)
 		i += 1
+
+func init_obj(obj, x, y, vis : bool = true):
+	if obj != null:
+		obj.position.z = -(y + 1)
+		obj.position.x = x + 1
+		obj.position.y = 0.25
+		obj.visible = vis
 
 func new_game():
 	grid = [
-			res_bomb, null, res_wump, res_hole,
+			bomb, null, wump, hole,
 			null, null, null, null,
-			res_bat, null, res_play, null,
+			bat, null, player, null,
 			null, null, null, null,
-		]
-	view = [
-			false, false, false, false,
-			false, false, false, false,
-			false, false, true, false,
-			false, false, false, false,
 		]
 
 func _input(event):
@@ -68,10 +70,6 @@ func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		pass
 
-var player_x = 3
-var player_y = 3
-
 func set_mark(x, y):
-	mark.visible = true
-	mark.position.x = player_x + x
-	mark.position.z = -(player_y + y)
+	mark.position.x = player.position.x + x
+	mark.position.z = player.position.z + y
