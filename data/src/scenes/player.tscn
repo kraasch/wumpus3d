@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://blaqlpaaiwod6"]
+
+[ext_resource type="PackedScene" uid="uid://dgosmskge3prm" path="res://data/assets/graveyard_glb/character-digger.glb" id="1_6174v"]
+
+[node name="Player" type="Node3D"]
+
+[node name="character-digger" parent="." instance=ExtResource("1_6174v")]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://r2srd3td6iqs"]
+
+[ext_resource type="PackedScene" uid="uid://dhahsa0e3pqme" path="res://data/assets/graveyard_glb/cross.glb" id="1_ns86t"]
+
+[node name="Fog" type="Node3D"]
+
+[node name="cross" parent="." instance=ExtResource("1_ns86t")]

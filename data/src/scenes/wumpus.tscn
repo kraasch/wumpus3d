@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://c6e83flrrxcgy"]
 
-[ext_resource type="PackedScene" uid="uid://b0dpmidjx8bej" path="res://data/assets/kenney_dae/spikeBlock.dae" id="1_ldol7"]
+[ext_resource type="PackedScene" uid="uid://dtlqiwfs3anmq" path="res://data/assets/graveyard_glb/character-ghost.glb" id="1_cqy2a"]
 
 [node name="Wumpus" type="Node3D"]
 
-[node name="spikeBlock" parent="." instance=ExtResource("1_ldol7")]
+[node name="character-ghost" parent="." instance=ExtResource("1_cqy2a")]
