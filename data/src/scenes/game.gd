@@ -22,6 +22,8 @@ func place_object(resource, x, y, z : float = 0.25):
 	obj.position.x = x
 
 func _ready():
+	self.get_node('Objs').add_child(mark)
+	mark.visible = false
 	mark.position.y = 0.25
 	new_game()
 	show_game()
@@ -30,6 +32,7 @@ func show_game():
 	const N = 4
 	var i = 0
 	for obj in grid:
+		@warning_ignore("integer_division")
 		var x : int = int(i / N)
 		var y : int = int(i % N)
 		if view[i]:
@@ -55,18 +58,20 @@ func new_game():
 
 func _input(event):
 	if event.is_action_pressed("ui_left"):
-		set_mark(0, 0)
-	if event.is_action_pressed("ui_right"):
-		set_mark(0, 1)
-	if event.is_action_pressed("ui_up"):
 		set_mark(1, 0)
+	if event.is_action_pressed("ui_right"):
+		set_mark(-1, 0)
+	if event.is_action_pressed("ui_up"):
+		set_mark(0, -1)
 	if event.is_action_pressed("ui_down"):
-		set_mark(1, 1)
+		set_mark(0, 1)
+	if event.is_action_pressed("ui_accept"):
+		pass
 
 var player_x = 3
 var player_y = 3
 
 func set_mark(x, y):
+	mark.visible = true
 	mark.position.x = player_x + x
-	mark.position.z = player_y + y
-	print('input')
+	mark.position.z = -(player_y + y)
