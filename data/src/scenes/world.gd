@@ -1,4 +1,10 @@
 extends Node3D
 
+const res_msg = preload("res://data/src/scenes/message.tscn")
+
 func _ready():
-	self.get_node('Misc/Hud').world = self
+	$'Misc/Hud'.world = self
+	$'Misc/Game'.world = self
+	
+func msg(text, ttl):
+	res_msg.instantiate().msg(text, ttl, $'Misc/Log')

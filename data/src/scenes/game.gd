@@ -1,5 +1,7 @@
 extends Node3D
 
+var world = null
+
 const res_bomb = preload("res://data/src/scenes/bomb.tscn")
 const res_hole = preload("res://data/src/scenes/hole.tscn")
 const res_wump = preload("res://data/src/scenes/wumpus.tscn")
@@ -30,7 +32,7 @@ func _ready():
 		obj.visible = true
 		obj.position.y = 0.25
 	new_game()
-	init_obj(mark, 5, 5)
+	init_obj(mark, 5, 5, false)
 	init_game()
 
 func init_game():
@@ -71,17 +73,20 @@ func _input(event):
 		move_player()
 
 func move_player():
-	player.position.x = mark.position.x
-	player.position.z = mark.position.z
+	if mark.visible:
+		# TODO: move in GRID, then update COORDINATES.
+		player.position.x = mark.position.x
+		player.position.z = mark.position.z
+		mark.visible = false
 
 func set_mark(x, y):
+	mark.visible = true
 	const MIN = 1
 	const MAX = 4
 	var temp_x = player.position.x + x
 	var temp_y = player.position.z + y
-	temp_x = max(MIN, temp_x)
-	temp_x = min(MAX, temp_x)
-	temp_y = max(-MAX, temp_y)
-	temp_y = min(-MIN, temp_y)
+	if MIN > temp_x or MAX < temp_x or -MAX > temp_y or -MIN < temp_y:
+		mark.visible = false
+	# TODO: move in GRID, then update COORDINATES.
 	mark.position.x = temp_x
 	mark.position.z = temp_y

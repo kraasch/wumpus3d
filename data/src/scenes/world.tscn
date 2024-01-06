@@ -23,9 +23,17 @@ anchor_bottom = 0.683
 offset_right = 141.696
 offset_bottom = 205.416
 
-[node name="Objs" type="Node3D" parent="."]
+[node name="Log" type="Control" parent="Misc"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Game" parent="Objs" instance=ExtResource("1_hsb8l")]
+[node name="Game" parent="Misc" instance=ExtResource("1_hsb8l")]
+
+[node name="Objs" type="Node3D" parent="."]
 
 [node name="Env" type="Node3D" parent="."]
 
