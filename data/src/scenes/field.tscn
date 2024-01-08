@@ -1,7 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2jlubt1cp068"]
+[gd_scene load_steps=5 format=3 uid="uid://d2jlubt1cp068"]
 
 [ext_resource type="PackedScene" uid="uid://cnfldnyuppi64" path="res://data/assets/kenney_dae/blockMoving.dae" id="1_5cehl"]
+[ext_resource type="Shader" path="res://data/src/scenes/field.gdshader" id="2_01nut"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2tesf"]
+render_priority = 0
+shader = ExtResource("2_01nut")
+shader_parameter/albedo = Color(1, 1, 1, 0)
+shader_parameter/roughness = 0.15
+shader_parameter/normal_strength = 1.0
+shader_parameter/edge_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xshtr"]
+material = SubResource("ShaderMaterial_2tesf")
 
 [node name="Field" type="Node3D"]
 
 [node name="blockMoving" parent="." instance=ExtResource("1_5cehl")]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_xshtr")
