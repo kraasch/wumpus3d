@@ -5,10 +5,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2tesf"]
 render_priority = 0
 shader = ExtResource("2_01nut")
-shader_parameter/albedo = Color(1, 1, 1, 0)
-shader_parameter/roughness = 0.15
-shader_parameter/normal_strength = 1.0
-shader_parameter/edge_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 5.0
+shader_parameter/base_color = Color(1, 1, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xshtr"]
 material = SubResource("ShaderMaterial_2tesf")
@@ -16,5 +14,5 @@ material = SubResource("ShaderMaterial_2tesf")
 [node name="Field" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.95, 0, 0, 0, 0.25, 0, 0, 0, 0.95, 0, 0, 0)
 mesh = SubResource("BoxMesh_xshtr")
