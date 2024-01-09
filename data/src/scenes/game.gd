@@ -10,12 +10,13 @@ const res_play = preload("res://data/src/scenes/player.tscn")
 const res_fog  = preload("res://data/src/scenes/fog.tscn")
 const res_mark = preload("res://data/src/scenes/marker.tscn")
 
-var mark   = res_mark.instantiate()
 var player = res_play.instantiate()
+var mark   = res_mark.instantiate()
 var wump   = res_wump.instantiate()
-var bat    = res_bat.instantiate()
 var hole   = res_hole.instantiate()
 var bomb   = res_bomb.instantiate()
+var bat    = res_bat.instantiate()
+var fog    = res_fog.instantiate()
 
 var grid = []
 var game_objects = []
@@ -31,7 +32,12 @@ func _ready():
 		self.get_node('Objs').add_child(obj)
 		obj.visible = true
 		obj.position.y = 0.25
-	new_game()
+	grid = [
+			bomb, null, wump, hole,
+			null, null, null, null,
+			bat, null, player, null,
+			null, null, null, fog,
+		]
 	init_obj(mark, 5, 5, false)
 	init_game()
 
@@ -51,14 +57,6 @@ func init_obj(obj, x, y, vis : bool = true):
 		obj.position.x = x + 1
 		obj.position.y = 0.25
 		obj.visible = vis
-
-func new_game():
-	grid = [
-			bomb, null, wump, hole,
-			null, null, null, null,
-			bat, null, player, null,
-			null, null, null, null,
-		]
 
 func _input(event):
 	if event.is_action_pressed("ui_left"):
