@@ -1,7 +1,7 @@
 
 # Wumpus 3D
 
-[https://kraasch.itch.io/wumpus](Play the game).
+[Play the game](https://kraasch.itch.io/wumpus).
 
 ## to-do
 
