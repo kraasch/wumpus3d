@@ -1,7 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://r2srd3td6iqs"]
+[gd_scene load_steps=4 format=3 uid="uid://r2srd3td6iqs"]
 
-[ext_resource type="PackedScene" uid="uid://dhahsa0e3pqme" path="res://data/assets/graveyard_glb/cross.glb" id="1_ns86t"]
+[ext_resource type="Shader" path="res://data/src/scenes/fog.gdshader" id="2_nfsf7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iluoy"]
+render_priority = 0
+shader = ExtResource("2_nfsf7")
+shader_parameter/_shield_color = Color(0, 0, 1, 1)
+shader_parameter/_shield_color_brightness = 10.0
+shader_parameter/_shield_intensity = 2.0
+shader_parameter/_rotation = Vector3(0.1, 0, 0)
+shader_parameter/_shield_size = 0.0
+shader_parameter/_shield_pulse_frequency = 1.0
+shader_parameter/_shield_pulse_density = 1.0
+shader_parameter/_shield_pulse_amplitude = 1.0
+shader_parameter/_shield_pulse_blend = 1.0
+shader_parameter/_shield_pulse_radius = 1.0
+shader_parameter/_impact_origin = Vector3(1, 0, 0)
+shader_parameter/_impact_frequency = 5.0
+shader_parameter/_impact_density = 5.0
+shader_parameter/_impact_amplitude = 6.0
+shader_parameter/_impact_blend = 0.0
+shader_parameter/_impact_radius = 1.1
+shader_parameter/_impact_anim = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_g0l7y"]
+material = SubResource("ShaderMaterial_iluoy")
 
 [node name="Fog" type="Node3D"]
 
-[node name="cross" parent="." instance=ExtResource("1_ns86t")]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_g0l7y")

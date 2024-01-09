@@ -28,6 +28,7 @@ func _ready():
 	game_objects.append(bat)
 	game_objects.append(hole)
 	game_objects.append(bomb)
+	game_objects.append(fog)
 	for obj in game_objects:
 		self.get_node('Objs').add_child(obj)
 		obj.visible = true
