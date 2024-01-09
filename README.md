@@ -1,6 +1,8 @@
 
 # Wumpus 3D
 
+[https://kraasch.itch.io/wumpus](Play the game).
+
 ## to-do
 
 main:
