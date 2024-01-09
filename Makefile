@@ -1,3 +1,3 @@
 
 to_itch:
-	butler push ./channels/web/ kraasch/wumpus:html
+	butler push ./export/channels/web/ kraasch/wumpus:html
