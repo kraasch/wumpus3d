@@ -25,7 +25,12 @@ extra:
 
 ## sources
 
- - https://www.youtube.com/watch?v=JxbnStn-BIY
- - https://github.com/godotengine/godot/issues/74111
- - https://kenney.nl/assets/platformer-kit
- - https://www.kenney.nl/assets/graveyard-kit
+ - other.
+   - https://www.youtube.com/watch?v=JxbnStn-BIY
+   - https://github.com/godotengine/godot/issues/74111
+ - initial assets:
+   - https://kenney.nl/assets/platformer-kit
+   - initial assets: https://www.kenney.nl/assets/graveyard-kit
+ - idea for post processsing shader:
+   - https://www.youtube.com/watch?v=WBoApONC7bM
+   - https://github.com/CBerry22/3d-Pixel-Art-In-Godot-4/blob/master/outline.gdshader
