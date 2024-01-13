@@ -1,8 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://c68il1yq756c"]
+[gd_scene load_steps=8 format=3 uid="uid://c68il1yq756c"]
 
 [ext_resource type="PackedScene" uid="uid://cy8thy6q3xt6x" path="res://data/src/scenes/game.tscn" id="1_hsb8l"]
 [ext_resource type="Script" path="res://data/src/scenes/world.gd" id="1_i3fff"]
+[ext_resource type="Shader" path="res://data/src/scenes/post-processor.gdshader" id="2_vjedr"]
 [ext_resource type="PackedScene" uid="uid://cfea548qo6k0g" path="res://data/src/scenes/hud.tscn" id="6_or7j7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jdxi"]
+render_priority = 0
+shader = ExtResource("2_vjedr")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.6
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_tpn1t"]
+material = SubResource("ShaderMaterial_8jdxi")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="Environment" id="Environment_gd171"]
 volumetric_fog_enabled = true
@@ -12,9 +29,28 @@ script = ExtResource("1_i3fff")
 
 [node name="Misc" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="Misc"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Misc"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="Misc/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(288, 162)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Misc/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.707107, 0.579228, -0.40558, 0, 0.573577, 0.819152, 0.707107, -0.579228, 0.40558, -2, 9, 2)
 fov = 43.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Misc/SubViewportContainer/SubViewport/Camera3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_tpn1t")
 
 [node name="Hud" parent="Misc" instance=ExtResource("6_or7j7")]
 anchors_preset = -1
