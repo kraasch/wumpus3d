@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c68il1yq756c"]
+[gd_scene load_steps=11 format=3 uid="uid://c68il1yq756c"]
 
 [ext_resource type="PackedScene" uid="uid://cy8thy6q3xt6x" path="res://data/src/scenes/game.tscn" id="1_hsb8l"]
 [ext_resource type="Script" path="res://data/src/scenes/world.gd" id="1_i3fff"]
 [ext_resource type="Shader" path="res://data/src/scenes/post-processor.gdshader" id="2_vjedr"]
+[ext_resource type="Shader" path="res://data/src/scenes/shaders/water.gdshader" id="5_fgw45"]
 [ext_resource type="PackedScene" uid="uid://cfea548qo6k0g" path="res://data/src/scenes/hud.tscn" id="6_or7j7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8jdxi"]
@@ -16,6 +17,20 @@ size = Vector2(2, 2)
 
 [sub_resource type="Environment" id="Environment_gd171"]
 volumetric_fog_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q24tx"]
+shader = ExtResource("5_fgw45")
+shader_parameter/WATER_COL = Color(0.176471, 0.635294, 0.85098, 1)
+shader_parameter/WATER2_COL = Color(0.0588235, 0.529412, 0.776471, 1)
+shader_parameter/FOAM_COL = Color(0.87451, 0.988235, 1, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(5, 5)
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_gvbi6"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("ShaderMaterial_q24tx")
+orientation = 1
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_i3fff")
@@ -74,4 +89,6 @@ transform = Transform3D(0.958263, -0.132012, -0.253583, 0.281642, 0.283617, 0.91
 
 [node name="Shaders" type="Node3D" parent="."]
 
-[node name="WaterShader" type="MeshInstance2D" parent="Shaders"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Shaders"]
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 5, 0, -5)
+mesh = SubResource("QuadMesh_gvbi6")
