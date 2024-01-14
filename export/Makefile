@@ -1,5 +1,12 @@
 dummy:
 	@echo 'Please specify the exact rule to run ;)'
 
-web:
+web_all:
+	make web_export
+	make web_push
+
+web_export:
+	cd ..; godot4 --headless --path . --export-release Web ./export/channels/web/index.html
+
+web_push:
 	butler push ./channels/web/ kraasch/wumpus:html
