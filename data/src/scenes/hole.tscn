@@ -1,7 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxpa66uejtyvw"]
+[gd_scene load_steps=4 format=3 uid="uid://bxpa66uejtyvw"]
 
-[ext_resource type="PackedScene" uid="uid://cn6fx70wmct8u" path="res://data/assets/kenney_dae/spikes.dae" id="1_qjfp7"]
+[ext_resource type="Shader" path="res://data/src/scenes/hole.gdshader" id="1_hnw3f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uehlo"]
+render_priority = 0
+shader = ExtResource("1_hnw3f")
+shader_parameter/outline_width = 5.0
+shader_parameter/base_color = Color(0, 0, 0, 0)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_770y4"]
+material = SubResource("ShaderMaterial_uehlo")
+height = 0.01
 
 [node name="Hole" type="Node3D"]
 
-[node name="spikes" parent="." instance=ExtResource("1_qjfp7")]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_770y4")
