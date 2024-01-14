@@ -1,2 +1,5 @@
+dummy:
+	@echo 'Please specify the exact rule to run ;)'
+
 web:
-	itch_butler_wrapper web html kraasch new-game --non-interactive
+	butler push ./channels/web/ kraasch/wumpus:html
