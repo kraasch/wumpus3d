@@ -10,3 +10,6 @@ web_export:
 
 web_push:
 	butler push ./channels/web/ kraasch/wumpus:html
+
+web_show:
+	xdg-open 'https://kraasch.itch.io/wumpus'
