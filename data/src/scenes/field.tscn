@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("2_01nut")
 shader_parameter/outline_width = 5.0
-shader_parameter/base_color = Color(1, 1, 1, 1)
+shader_parameter/base_color = Color(0.431373, 1, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xshtr"]
 material = SubResource("ShaderMaterial_2tesf")

@@ -66,6 +66,8 @@ void fragment() {
 		vec3 n = GetNormal(p);
 		col = n.rgb;
 	}
+	float time = abs(mod(TIME, 2.0) - 1.0);
+	col = col / (0.0 - time);
 	
 	ALBEDO = col;
 }

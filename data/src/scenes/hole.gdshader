@@ -1,19 +1,92 @@
+
+// source: https://godotshaders.com/shader/fast-starnest/
+
 shader_type spatial;
+render_mode unshaded;
 
-// source: https://godotshaders.com/shader/quick-example-fresnel-outline/
+uniform int iterations = 20;
+uniform float formuparam = 1.00;
 
-// Higher values are smaller width.
-uniform float outline_width : hint_range(0.0, 10.0, 0.1) = 5.0;
+uniform int volsteps = 20;
+uniform float stepsize = 0.1;
 
-uniform vec4 base_color : source_color = vec4(0.0);
+uniform float zoom = 0.800;
+uniform float tile = 0.5;
+uniform float speed = 0.001;
 
-float fresnel(float amount, vec3 normal, vec3 view) {
-	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+uniform float brightness = 0.002;
+uniform float darkmatter = 0.100;
+uniform float distfading = 0.650;
+uniform float saturation = 0.750;
+
+uniform vec2 screen_pixel_size;
+
+void vertex() {
+	float min_size = 0.6;
+	float expanse_speed = 1.0;
+	float time = abs(mod(TIME * expanse_speed, 2.0) - 1.0);
+	VERTEX.z *= sin(PI * time + VERTEX.x * time) * 0.1 + min_size;
+	VERTEX.x *= sin(PI * time + VERTEX.y * time) * 0.2 + min_size;
 }
 
-void fragment() {
-	float basic_fresnel = fresnel(outline_width, NORMAL, VIEW);
-	// The 0.5 magic number seems to give the most intuitive control.s
-	basic_fresnel = step(0.5, basic_fresnel);
-	ALBEDO = base_color.rgb - basic_fresnel;
+float SCurve (float value) {
+
+    if (value < 0.5)
+    {
+        return value * value * value * value * value * 16.0; 
+    }
+    
+    value -= 1.0;
+    
+    return value * value * value * value * value * 16.0 + 1.0;
+}
+
+void fragment()
+{
+//	SCREEN_PIXEL_SIZE;
+	vec2 iResolution = 1.0 / (1.0/VIEWPORT_SIZE);
+	//get coords and direction
+	vec2 uv=FRAGCOORD.xy/iResolution.xy;
+	uv.y*=iResolution.y/iResolution.x;
+	vec3 dir=vec3(uv*zoom,1.);
+	float time=TIME*speed;
+
+	vec3 from=vec3(1.0,0.5,0.5);
+	from-=vec3(0.0,time,0.0);
+	
+	//volumetric rendering
+	float s=0.1,fade=1.;
+	vec3 v=vec3(0.);
+	for (int r=0; r<volsteps; r++) {
+		lowp vec3 p=from+s*dir*0.5;
+		p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
+		lowp float pa,a=pa=0.;
+		for (int i=0; i<iterations; i++) { 
+			p=abs(p)/dot(p,p)-formuparam; // the magic formula
+			a+=abs(length(p)-pa); // absolute sum of average change
+			pa=length(p);
+		}
+		lowp float dm=max(0.,darkmatter-a*a*.001); //dark matter
+		a = pow(a, 2.3); // add contrast
+		if (r>6) fade*=1.-dm; // dark matter, don't render near
+		v+=fade;
+		v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
+		fade*=distfading; // distance fading
+		s+=stepsize;
+	}
+    
+	v=mix(vec3(length(v)),v,saturation); //color adjust
+    
+    vec4 C = vec4(v*.01,1.);
+    
+     	C.r = pow(C.r, 0.35); 
+ 	 	C.g = pow(C.g, 0.36); 
+ 	 	C.b = pow(C.b, 0.38); 
+ 	
+    vec4 L = C;   	
+    
+    ALBEDO.r = mix(L.r, SCurve(C.r), 0.7);
+    ALBEDO.g = mix(L.g, SCurve(C.g), 1.0); 
+    ALBEDO.b = mix(L.b, SCurve(C.b), 0.2);     	
+	
 }

@@ -5,8 +5,18 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uehlo"]
 render_priority = 0
 shader = ExtResource("1_hnw3f")
-shader_parameter/outline_width = 5.0
-shader_parameter/base_color = Color(0, 0, 0, 0)
+shader_parameter/iterations = 20
+shader_parameter/formuparam = 1.0
+shader_parameter/volsteps = 20
+shader_parameter/stepsize = 0.1
+shader_parameter/zoom = 0.8
+shader_parameter/tile = 0.5
+shader_parameter/speed = 0.001
+shader_parameter/brightness = 0.002
+shader_parameter/darkmatter = 0.1
+shader_parameter/distfading = 0.65
+shader_parameter/saturation = 0.75
+shader_parameter/screen_pixel_size = null
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_770y4"]
 material = SubResource("ShaderMaterial_uehlo")

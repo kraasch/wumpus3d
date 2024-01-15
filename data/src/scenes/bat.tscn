@@ -2,17 +2,20 @@
 
 [ext_resource type="Shader" path="res://data/src/scenes/bat.gdshader" id="1_26iat"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pbryx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obxor"]
 render_priority = 0
 shader = ExtResource("1_26iat")
-shader_parameter/outline_width = 5.0
-shader_parameter/base_color = Color(0, 0, 0, 0)
+shader_parameter/battery = 1.0
+shader_parameter/anchor = -0.5
+shader_parameter/speed_scale = 1.0
+shader_parameter/fov = 0.2
+shader_parameter/background_color = Color(0, 0.1, 0.2, 1)
+shader_parameter/grid_color = Color(1, 0.5, 1, 1)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_tsq0n"]
-material = SubResource("ShaderMaterial_pbryx")
-height = 0.2
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_05r0c"]
+material = SubResource("ShaderMaterial_obxor")
 
 [node name="Bat" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_tsq0n")
+mesh = SubResource("CapsuleMesh_05r0c")
