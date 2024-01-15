@@ -16,7 +16,6 @@ flip_faces = true
 size = Vector2(2, 2)
 
 [sub_resource type="Environment" id="Environment_gd171"]
-volumetric_fog_enabled = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_13p5b"]
 resource_local_to_scene = true
