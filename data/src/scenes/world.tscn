@@ -37,8 +37,8 @@ shader = ExtResource("5_phdgi")
 shader_parameter/scroll_a = Vector2(0.05, 0.05)
 shader_parameter/scroll_b = Vector2(-0.05, -0.05)
 shader_parameter/distortion_strength = 0.2
-shader_parameter/tone_color = Color(0.0627451, 0.301961, 1, 1)
-shader_parameter/top_color = Color(1, 1, 1, 1)
+shader_parameter/tone_color = Color(0, 0, 1, 1)
+shader_parameter/top_color = Color(0.8, 1, 0.8, 1)
 shader_parameter/light_start = 0.275
 shader_parameter/light_end = 0.4
 shader_parameter/noise_a = SubResource("NoiseTexture2D_dvptn")
@@ -106,6 +106,6 @@ transform = Transform3D(0.958263, -0.132012, -0.253583, 0.281642, 0.283617, 0.91
 
 [node name="Shaders" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Shaders"]
+[node name="Water" type="MeshInstance3D" parent="Shaders"]
 transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 5, 0, -5)
 mesh = SubResource("QuadMesh_gvbi6")
