@@ -1,19 +1,15 @@
 shader_type spatial;
 
-// source: https://godotshaders.com/shader/quick-example-fresnel-outline/
-
-// Higher values are smaller width.
 uniform float outline_width : hint_range(0.0, 10.0, 0.1) = 5.0;
+uniform vec4 base_color : source_color = vec4(1.0, 0.2, 0.2, 0.0);
 
-uniform vec4 base_color : source_color = vec4(1.0);
-
-float fresnel(float amount, vec3 normal, vec3 view) {
-	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+float random (vec2 uv) {
+    return fract(sin(dot(uv.xy,
+        vec2(12.9898,78.233))) * 43758.5453123);
 }
 
 void fragment() {
-	float basic_fresnel = fresnel(outline_width, NORMAL, VIEW);
-	// The 0.5 magic number seems to give the most intuitive control.
-	basic_fresnel = step(0.5, basic_fresnel);
-	ALBEDO = base_color.rgb - basic_fresnel;
+	float speed = 0.4 * random(UV);
+	float glow = abs(mod(TIME * speed, 2.0) - 1.0);
+	ALBEDO = vec3(0.0, glow * 0.1 + 0.1 , 0.0);
 }
