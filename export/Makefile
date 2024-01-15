@@ -4,6 +4,7 @@ dummy:
 web_all:
 	make web_export
 	make web_push
+	make web_show
 
 web_export:
 	cd ..; godot4 --headless --path . --export-release Web ./export/channels/web/index.html
