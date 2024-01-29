@@ -1,121 +1,88 @@
 shader_type spatial;
-render_mode shadows_disabled, specular_disabled, ambient_light_disabled, unshaded;
+render_mode depth_draw_opaque;
 
-// source: https://godotshaders.com/shader/energy-shield-with-impact-effect/
+// source: https://godotshaders.com/shader/cloud-material/
 
+uniform float height_scale = 0.5;
+uniform float wave_speed = 0.1;
+uniform float upper_transparency = 0.89;
+uniform float global_transparency = 0.9;
 
-group_uniforms Shield_Color;
-uniform vec3 _shield_color : source_color = vec3(0.0, 0.0, 1.0);
-uniform float _shield_color_brightness : hint_range(0.25, 20.0, 0.05) = 10.0;
-uniform float _shield_intensity : hint_range(0.25, 5.0, 0.05) = 2.0;
+uniform vec2 time_factor = vec2(2.0, 3.0);
+uniform sampler2D texture_albedo : source_color;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
 
-group_uniforms Shield_Transform;
-uniform vec3 _rotation = vec3(0.1, 0.0, 0.0);
-uniform float _shield_size : hint_range(0.0, 0.5, 0.01) = 0.0;
+uniform vec4 color1 : source_color = vec4(0.78, 0.91, 0.93, 1.0);
+uniform vec4 color2 : source_color = vec4(0.71, 0.89, 0.95, 1.0);
 
-group_uniforms Shield_Pulse;
-uniform float _shield_pulse_frequency = 1.0;
-uniform float _shield_pulse_density = 1.0;
-uniform float _shield_pulse_amplitude = 1.0;
-uniform float _shield_pulse_blend = 1.0;
-uniform float _shield_pulse_radius = 1.0;
+varying flat vec3 out_color;
+varying flat vec3 soft_color;
 
-group_uniforms Impact_Shape;
-uniform vec3 _impact_origin = vec3(1.0, 0.0, 0.0);
-uniform float _impact_frequency = 5.0;
-uniform float _impact_density = 5.0;
-uniform float _impact_amplitude = 6.0;
-uniform float _impact_blend = 0;
-uniform float _impact_radius = 1.1;
-uniform float _impact_anim = 0.0;
+vec3 lerpColor(vec4 a, vec4 b, float t){
+	float rr = a.r + (b.r - a.r) * t;
+	float gg = a.g + (b.g - a.g) * t;
+	float bb = a.b + (b.b - a.b) * t;
+	return vec3(rr, gg, bb);
+	}
 
-// === IMPACT ===
-
-float _GetRippleOrigin(vec3 vert, vec3 orig) {
-	// distance of each vertex from the origin
-	return length(orig - vert);
+float hash(vec2 p) {
+  return fract(sin(dot(p * 17.17, vec2(14.91, 67.31))) * 4791.9511);
 }
 
-float _FadeRipple(float orig, float blend, float radius) {
-	// create a radius 
-	float b = clamp(blend, 0.0, radius);
-	return smoothstep(b, -radius, orig);
+
+
+float noise(vec2 x) {
+  vec2 p = floor(x);
+  vec2 f = fract(x);
+  f = f * f * (3.0 - 2.0 * f);
+  vec2 a = vec2(1.0, 0.0);
+  return mix(mix(hash(p + a.yy), hash(p + a.xy), f.x),
+         mix(hash(p + a.yx), hash(p + a.xx), f.x), f.y);
 }
 
-float _ComputeRipple(vec3 vert, vec3 orig, float blend, float radius, float freq, float dens, float ampl, float anim) {
-	// calculate the intensity of the impact
-	float o = _GetRippleOrigin(vert, orig);
-	float i = sin(anim * freq - o * dens) / ampl;
-	return i * _FadeRipple(o, blend, radius);
-}
-
-// === SHIELD ===
-
-float saturate(float x) {
-  return max(0, min(1, x));
-}
-
-float ComputeFresnel(vec3 norm, vec3 view_dir, float intensity) {
-	// dot product between mesh normals and view direction
-	float fresnel = saturate(1.0 - dot(norm, view_dir));
-	// modulate fresnel intensity
-	fresnel = pow(fresnel, intensity);
-	return fresnel;
-}
-
-vec3 Rotate(vec3 vert, vec3 speed) {
-	// build the 3 rotation matrices
-	speed = speed * TIME * 5.0;
-	
-	mat4 xrot = mat4(
-		vec4(1.0, 0.0, 0.0, 0.0),
-		vec4(0.0, cos(speed.x), -sin(speed.x), 0.0),
-		vec4(0.0, sin(speed.x), cos(speed.x), 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0));
-	
-	mat4 yrot = mat4(
-		vec4(cos(speed.y), 0.0, -sin(speed.y), 0.0),
-		vec4(0.0, 1.0, 0.0, 0.0),
-		vec4(sin(speed.y), 0.0, cos(speed.y), 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0));
-	
-	mat4 zrot = mat4(
-		vec4(cos(speed.z), -sin(speed.z), 0.0, 0.0),
-		vec4(sin(speed.z), cos(speed.z), 0.0, 0.0),
-		vec4(0.0, 0.0, 1.0, 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0));
-		
-	return (xrot * yrot * zrot * vec4(vert, 1.0)).xyz;
+float fbm(vec2 x, float time) {
+  float height = 0.0;
+  float amplitude = 0.5;
+  float frequency = 0.5;
+  for (int i = 0; i < 6; i++){
+    height += noise(x * frequency + time * time_factor * wave_speed) * amplitude;
+    amplitude *= 0.5;
+    frequency *= 2.0;
+  }
+  return height;
 }
 
 void vertex() {
-	// rotate VERTICES in local space
-	VERTEX = Rotate(VERTEX, _rotation);
-	// ...and relative NORMALS for the fresnel effect to work
-	NORMAL = Rotate(NORMAL, _rotation);
 	
-	// Local to World conversion to add impact ripple
-	vec3 w_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
 	
-	// normalize impact origin vector
-	vec3 imp_or = normalize(_impact_origin);
+	out_color = vec3(color1.r, color1.g, color1.b);
+	soft_color = vec3(color1.r, color1.g, color1.b);
 	
-	float impact_ripple = _ComputeRipple(w_pos, 
-		_impact_origin, 
-		_impact_blend,
-		_impact_radius, 
-		_impact_frequency, 
-		_impact_density, 
-		_impact_amplitude,
-		_impact_anim);
+	float height = fbm(VERTEX.xz * 4.0, TIME);
+	VERTEX.y += height * height_scale;
+	COLOR.xyz = vec3(height);
 	
-	VERTEX += NORMAL * (impact_ripple + _shield_size);
+	if (VERTEX.y > 0.3){
+		out_color = lerpColor(color1, color2, clamp((VERTEX.y) / 3.0, 0.5, 1.0));
+		soft_color = vec3(color2.r, color2.g, color2.b);
+		
+		
+		
+	}
 }
 
-void fragment() {
-        // add fresnel
-	float f = ComputeFresnel(NORMAL, VIEW, _shield_intensity);
-	// set color and alpha
-	ALBEDO = f * _shield_color_brightness * _shield_color;
-	ALPHA *= f;
+
+
+void fragment(){
+	
+	ALBEDO = COLOR.xyz;
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALPHA = global_transparency;
+	ALBEDO = out_color * albedo_tex.rgb * COLOR.xyz;
+	 if (soft_color.r==color2.r && soft_color.g==color2.g && color2.b==color2.b) {   
+       ALPHA = upper_transparency;
+    }
 }
