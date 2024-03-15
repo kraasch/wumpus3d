@@ -21,14 +21,20 @@ var fog    = res_fog.instantiate()
 var grid = []
 var game_objects = []
 var fog_objects = []
+const N = 4
+const MIN = 1
+const MAX = 4
+var click_timer = null
+var px : int = -1
+var py : int = -1
 
 var select_count = 0
 var max_select = 4
-var actions = [
-		func(): set_mark(1, 0),
-		func(): set_mark(-1, 0),
-		func(): set_mark(0, -1),
-		func(): set_mark(0, 1)
+var directions = [
+	[1, 0],
+	[-1, 0],
+	[0, -1],
+	[0, 1]
 ]
 
 func _ready():
@@ -62,7 +68,6 @@ func visualize():
 		obj.position.y = 0.25
 
 func init_game():
-	const N = 4
 	for x in range(0, N):
 		for y in range(0, N):
 			var new_fog = res_fog.instantiate()
@@ -79,14 +84,13 @@ func init_obj(obj, x, y, vis : bool = true):
 		obj.position.x = x + 1
 		obj.position.y = 0.25
 		obj.visible = vis
-
-var click_timer = null
+		if obj is PlayerClass:
+			px = x
+			py = y
 
 func _input(event):
-	pass
 	if was_triggered(event):
-		var now = Time.get_ticks_msec()
-		if click_timer != null: # click was activated but didn't expire.
+		if click_timer != null:
 			# click was on time.
 			move_player()
 			remove_timer()
@@ -96,7 +100,7 @@ func _input(event):
 func create_timer():
 	click_timer = Timer.new()
 	click_timer.one_shot = true
-	click_timer.wait_time = 0.3
+	click_timer.wait_time = 0.4
 	click_timer.timeout.connect(on_timeout)
 	add_child(click_timer)
 	click_timer.start()
@@ -104,6 +108,7 @@ func create_timer():
 func on_timeout():
 	move_marker()
 	remove_timer()
+#	mark.visible = false # TODO.
 
 func remove_timer():
 	click_timer.stop()
@@ -115,26 +120,35 @@ func was_triggered(event):
 func move_marker():
 	select_count += 1
 	select_count = select_count % max_select
-	actions[select_count].call()
+	var dir = directions[select_count]
+	set_mark(dir[0], dir[1])
 
 func move_player():
 	if mark.visible:
-		# TODO: move in GRID, then update COORDINATES.
-		player.position.x = mark.position.x
-		player.position.z = mark.position.z
-		mark.visible = false
+		var dir = directions[select_count]
+		if is_free(px + dir[0], py + dir[1]):
+			# TODO: make grid coordinates the source of truth (instead of moving towards other objects).
+			player.position.x = mark.position.x
+			player.position.z = mark.position.z
+			mark.visible = false
 
-func set_mark(x, y):
+func is_free(x, y):
+	var obj = grid[x + y * N]
+	print(str(obj) + ' ' + str(x) + ', ' + str(y))
+	return obj == null
+
+func set_mark(change_x, change_y):
 	mark.visible = true
-	const MIN = 1
-	const MAX = 4
-	var temp_x = player.position.x + x
-	var temp_y = player.position.z + y
-	if MIN > temp_x or MAX < temp_x or -MAX > temp_y or -MIN < temp_y:
+	var x = px + change_x
+	var y = py + change_y
+	print(str(x) + ', ' + str(y))
+	if x < MIN or x > MAX or y < -MAX or y < -MIN:
+		print('out of bounds')
 		# mark is out of bounds, re-trigger set mark.
 		move_marker()
 		#mark.visible = false
 	else:
 		# new coordinates are within grid's bounds.
-		mark.position.x = temp_x
-		mark.position.z = temp_y
+		# TODO: make grid coordinates the source of truth (instead of moving towards other objects).
+		mark.position.x = x
+		mark.position.z = y

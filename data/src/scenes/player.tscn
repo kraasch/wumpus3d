@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://blaqlpaaiwod6"]
+[gd_scene load_steps=5 format=3 uid="uid://blaqlpaaiwod6"]
 
 [ext_resource type="Shader" path="res://data/src/scenes/player.gdshader" id="1_fecqy"]
+[ext_resource type="Script" path="res://data/src/scenes/player.gd" id="1_u5woa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ohxll"]
 render_priority = 0
@@ -12,6 +13,7 @@ shader_parameter/back_color = Color(1, 1, 1, 1)
 material = SubResource("ShaderMaterial_ohxll")
 
 [node name="Player" type="Node3D"]
+script = ExtResource("1_u5woa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_177yq")
