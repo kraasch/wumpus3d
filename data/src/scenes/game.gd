@@ -96,7 +96,7 @@ func _input(event):
 func create_timer():
 	click_timer = Timer.new()
 	click_timer.one_shot = true
-	click_timer.wait_time = 0.2
+	click_timer.wait_time = 0.3
 	click_timer.timeout.connect(on_timeout)
 	add_child(click_timer)
 	click_timer.start()
@@ -131,7 +131,10 @@ func set_mark(x, y):
 	var temp_x = player.position.x + x
 	var temp_y = player.position.z + y
 	if MIN > temp_x or MAX < temp_x or -MAX > temp_y or -MIN < temp_y:
-		mark.visible = false
-	# TODO: move in GRID, then update COORDINATES.
-	mark.position.x = temp_x
-	mark.position.z = temp_y
+		# mark is out of bounds, re-trigger set mark.
+		move_marker()
+		#mark.visible = false
+	else:
+		# new coordinates are within grid's bounds.
+		mark.position.x = temp_x
+		mark.position.z = temp_y
