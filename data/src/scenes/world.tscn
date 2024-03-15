@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c68il1yq756c"]
+[gd_scene load_steps=11 format=3 uid="uid://c68il1yq756c"]
 
 [ext_resource type="PackedScene" uid="uid://cy8thy6q3xt6x" path="res://data/src/scenes/game.tscn" id="1_hsb8l"]
 [ext_resource type="Script" path="res://data/src/scenes/world.gd" id="1_i3fff"]
@@ -17,32 +17,19 @@ size = Vector2(2, 2)
 
 [sub_resource type="Environment" id="Environment_gd171"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_q512m"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dvptn"]
-seamless = true
-noise = SubResource("FastNoiseLite_q512m")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_dyywc"]
-noise_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cfq3r"]
-seamless = true
-noise = SubResource("FastNoiseLite_dyywc")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q24tx"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("5_phdgi")
-shader_parameter/scroll_a = Vector2(0.05, 0.05)
-shader_parameter/scroll_b = Vector2(-0.05, -0.05)
-shader_parameter/distortion_strength = 0.2
-shader_parameter/tone_color = Color(0, 0, 1, 1)
-shader_parameter/top_color = Color(0.8, 1, 0.8, 1)
-shader_parameter/light_start = 0.275
-shader_parameter/light_end = 0.4
-shader_parameter/noise_a = SubResource("NoiseTexture2D_dvptn")
-shader_parameter/noise_b = SubResource("NoiseTexture2D_cfq3r")
+shader_parameter/R = Vector2(0.8, 0.6)
+shader_parameter/scale = 0.5
+shader_parameter/speed = 1.0
+shader_parameter/direction = Vector3(1, 1, 0)
+shader_parameter/distortion = 0.2
+shader_parameter/layers = 2.0
+shader_parameter/shades = 3.0
+shader_parameter/steps = 6
+shader_parameter/tint = Vector3(0.459, 0.765, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_gvbi6"]
 lightmap_size_hint = Vector2i(7, 7)

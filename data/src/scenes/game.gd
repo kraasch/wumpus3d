@@ -20,6 +20,7 @@ var fog    = res_fog.instantiate()
 
 var grid = []
 var game_objects = []
+var fog_objects = []
 
 func _ready():
 	game_objects.append(mark)
@@ -29,28 +30,36 @@ func _ready():
 	game_objects.append(hole)
 	game_objects.append(bomb)
 	game_objects.append(fog)
+	grid = [
+			bomb, null, wump,   hole,
+			null, null, null,   null,
+			bat,  null, player, null,
+			null, null, null,   null,
+		]
+	init_obj(mark, 5, 5, false)
+	init_obj(bomb, 5, 5, false)
+	init_obj(wump, 5, 5, false)
+	init_obj(hole, 5, 5, false)
+	init_obj(bat, 5, 5, false)
+	init_obj(player, 5, 5, false)
+	init_obj(fog, 5, 5, false)
+	init_game()
+	visualize()
+
+func visualize():
 	for obj in game_objects:
 		self.get_node('Objs').add_child(obj)
 		obj.visible = true
 		obj.position.y = 0.25
-	grid = [
-			bomb, null, wump, hole,
-			null, null, null, null,
-			bat, null, player, null,
-			null, null, null, fog,
-		]
-	init_obj(mark, 5, 5, false)
-	init_game()
 
 func init_game():
 	const N = 4
-	var i = 0
-	for obj in grid:
-		@warning_ignore("integer_division")
-		var x : int = int(i / N)
-		var y : int = int(i % N)
-		init_obj(obj, x, y)
-		i += 1
+	for x in range(0, N):
+		for y in range(0, N):
+			var new_fog = res_fog.instantiate()
+			game_objects.append(new_fog)
+			fog_objects.append(new_fog)
+			init_obj(new_fog, x, y)
 
 func init_obj(obj, x, y, vis : bool = true):
 	if obj != null:

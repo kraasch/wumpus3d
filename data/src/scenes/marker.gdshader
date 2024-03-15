@@ -55,7 +55,10 @@ void vertex() {
 }
 
 void fragment() {
+	float t = mod(TIME, 1.0);
+	if (t > 0.5) {
 	
+		
 	vec3 ro = world_camera;
 	vec3 rd =  normalize(world_position - ro);
 	
@@ -71,6 +74,8 @@ void fragment() {
 		vec3 n = GetNormal(p);
 		col = n.rgb;
 	}
+
 	
 	ALBEDO = col;
+	}
 }
