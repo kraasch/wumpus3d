@@ -22,6 +22,15 @@ var grid = []
 var game_objects = []
 var fog_objects = []
 
+var select_count = 0
+var max_select = 4
+var actions = [
+		func(): set_mark(1, 0),
+		func(): set_mark(-1, 0),
+		func(): set_mark(0, -1),
+		func(): set_mark(0, 1)
+]
+
 func _ready():
 	game_objects.append(mark)
 	game_objects.append(player)
@@ -71,17 +80,42 @@ func init_obj(obj, x, y, vis : bool = true):
 		obj.position.y = 0.25
 		obj.visible = vis
 
+var click_timer = null
+
 func _input(event):
-	if event.is_action_pressed("ui_left"):
-		set_mark(1, 0)
-	if event.is_action_pressed("ui_right"):
-		set_mark(-1, 0)
-	if event.is_action_pressed("ui_up"):
-		set_mark(0, -1)
-	if event.is_action_pressed("ui_down"):
-		set_mark(0, 1)
-	if event.is_action_pressed("ui_accept"):
-		move_player()
+	pass
+	if was_triggered(event):
+		var now = Time.get_ticks_msec()
+		if click_timer != null: # click was activated but didn't expire.
+			# click was on time.
+			move_player()
+			remove_timer()
+		else: # timer was not activated
+			create_timer()
+
+func create_timer():
+	click_timer = Timer.new()
+	click_timer.one_shot = true
+	click_timer.wait_time = 0.2
+	click_timer.timeout.connect(on_timeout)
+	add_child(click_timer)
+	click_timer.start()
+
+func on_timeout():
+	move_marker()
+	remove_timer()
+
+func remove_timer():
+	click_timer.stop()
+	click_timer = null
+
+func was_triggered(event):
+	return event.is_action_pressed("ui_select") or event.is_action_pressed("ui_accept")
+
+func move_marker():
+	select_count += 1
+	select_count = select_count % max_select
+	actions[select_count].call()
 
 func move_player():
 	if mark.visible:
