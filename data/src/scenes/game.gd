@@ -49,7 +49,7 @@ func _ready():
 func visualize():
 	for obj in game_objects:
 		self.get_node('Objs').add_child(obj)
-		obj.visible = true
+#		obj.visible = true
 		obj.position.y = 0.25
 
 func init_game():
@@ -59,7 +59,10 @@ func init_game():
 			var new_fog = res_fog.instantiate()
 			game_objects.append(new_fog)
 			fog_objects.append(new_fog)
-			init_obj(new_fog, x, y)
+			init_obj(new_fog, x, y, false)
+			var obj = grid[x + y * N] 
+			if obj != null:
+				init_obj(obj, x, y)
 
 func init_obj(obj, x, y, vis : bool = true):
 	if obj != null:
